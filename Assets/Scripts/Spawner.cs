@@ -1,11 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
+    public static Spawner Instance;
+
     [SerializeField] GameObject[] enemies;
     GameObject enemyToSpawn;
+    //ENCAPSULATION
+    public float SpawnPosZ { get; private set; } = 120;
+    float boundaryX = 9.5f;
+    
     float spawnTime = 0.4f;
     //ENCAPSULATION
     public float SpawnTime 
@@ -23,9 +30,17 @@ public class Spawner : MonoBehaviour
             }
        } 
     }
-     
+
+    //ABSTRACTION
+    GameObject GetRandomEnemyPrefab()
+    {
+        enemyToSpawn = enemies[Random.Range(0, enemies.Length)];
+        return enemyToSpawn;
+    }
+
     private void Start()
     {
+        Instance = this;
         SpawnTime = MainManager.Instance.spawnInterval;
         StartCoroutine(EnemySpawn());
     }
@@ -33,18 +48,13 @@ public class Spawner : MonoBehaviour
     IEnumerator EnemySpawn()
     {
         yield return new WaitForSeconds(spawnTime);
-        Instantiate(GetRandomEnemy(), GenerateRandomSpawnPos(), enemyToSpawn.transform.rotation);
+        Instantiate(GetRandomEnemyPrefab(), GenerateRandomSpawnPos(), enemyToSpawn.transform.rotation);
         StartCoroutine(EnemySpawn());
     }
 
-    //ABSTRACTION
-    GameObject GetRandomEnemy()
-    {
-        enemyToSpawn = enemies[Random.Range(0, enemies.Length)];
-        return enemyToSpawn;
-    }
+    
     Vector3 GenerateRandomSpawnPos()
     {
-        return new Vector3(Random.Range(-10f, 10f), enemyToSpawn.transform.localScale.y / 2, 20);
+        return new Vector3(Random.Range(-boundaryX, boundaryX), enemyToSpawn.transform.localScale.y / 2, SpawnPosZ);
     }
 }

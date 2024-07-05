@@ -5,11 +5,11 @@ using UnityEngine;
 
 public class SpeedyBlock : Block //INHERITANCE
 {
-    float speed = 25f;
+    float _speed = 25f;
 
     //POLYMORPHISM
     public override void Move()
     {
-        transform.Translate(Vector3.forward * speed * Time.deltaTime, Space.Self);
+        transform.Translate(Vector3.forward * _speed * Time.deltaTime, Space.Self);
     }
 }
