@@ -26,6 +26,7 @@ public class Spawner : MonoBehaviour
      
     private void Start()
     {
+        SpawnTime = MainManager.Instance.spawnInterval;
         StartCoroutine(EnemySpawn());
     }
 

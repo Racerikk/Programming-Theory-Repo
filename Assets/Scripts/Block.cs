@@ -16,7 +16,7 @@ public class Block : MonoBehaviour
     {
         transform.Translate(Vector3.forward * speed * Time.deltaTime, Space.Self);
     }
-    void BoundaryCheck()
+    public virtual void BoundaryCheck()
     {
         if(transform.position.z < -15)
         {
