@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class SpeedyBlock : Block //INHERITANCE
 {
-    float _speed = 25f;
+    float _speed = 30f;
 
     //POLYMORPHISM
     public override void Move()

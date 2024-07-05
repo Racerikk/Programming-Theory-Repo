@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Block : MonoBehaviour
 {
-    float speed = 15f;
+    float speed = 20f;
 
     private void Update()
     {
@@ -20,6 +21,14 @@ public class Block : MonoBehaviour
     {
         if(transform.position.z < -15)
         {
+            Destroy(gameObject);
+        }
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            collision.gameObject.GetComponent<HealthSystem>().Damage(1);
             Destroy(gameObject);
         }
     }
